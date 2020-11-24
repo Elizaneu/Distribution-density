@@ -108,3 +108,5 @@ if __name__ == "__main__":
 
     slider_bandwidth.on_changed(update_manual)
     plt.show()
+
+    optimal_estimate()
