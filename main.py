@@ -62,7 +62,7 @@ def kde_manual_calc(val):
     return density, x_test
 
 
-# Update plot using kde_handle function
+# Update plot using kde_manual_calc function
 def update_manual(val):
     graph_axes.clear()
     kde, x_test = kde_manual_calc(val)
