@@ -33,10 +33,11 @@ def scatter_histogram(x):
     plt.ylabel('Value')
     plt.title('Scatter plot')
     plt.subplot(122)
-    plt.hist(x_train, bins=50)
+    hist = plt.hist(x_train, bins=50)
     plt.title('Histogram')
     fig.subplots_adjust(wspace=.3)
     plt.show()
+    return hist
 
 
 # Kernel density estimation
@@ -47,16 +48,25 @@ def kde(val):
     return log_dens
 
 
-def kde_handle(val):
-    x_test = np.linspace(-1, 7, 2000)
-    density = sum((abs(xi - x_test) < val) for xi in x_train)
-
-
 # Update plot while using slider
 def update(val):
     graph_axes.clear()
     log_dens = kde(val)
     graph_axes.plot(x_test, np.exp(log_dens))
+    return
+
+
+def kde_manual_calc(val):
+    x_test = np.linspace(-1, 7, 2000)
+    density = sum(np.abs(x_train - x_test) < val)
+    return density, x_test
+
+
+# Update plot using kde_handle function
+def update_manual(val):
+    graph_axes.clear()
+    kde, x_test = kde_manual_calc(val)
+    graph_axes.plot(x_test, kde)
     return
 
 
@@ -96,5 +106,5 @@ if __name__ == "__main__":
     button_clear = Button(axes_button_clear, 'Очистить')
     button_clear.on_clicked(on_button_clear_clicked)
 
-    slider_bandwidth.on_changed(update)
+    slider_bandwidth.on_changed(update_manual)
     plt.show()
